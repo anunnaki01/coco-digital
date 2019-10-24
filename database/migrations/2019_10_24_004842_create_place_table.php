@@ -22,8 +22,7 @@ class CreatePlaceTable extends Migration
             $table->string('name', 255);
             $table->integer('company_id')->unsigned();
             $table->foreign('company_id')->references('id')->on('company');
-            $table->tinyInteger('active')->default(1);
-            $table->timestamps();
+            $table->tinyInteger('is_active')->default(1);
         });
     }
 

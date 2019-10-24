@@ -2,7 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\EloquentCompanyRepository;
 use App\Repositories\EloquentPlaceRepository;
+use App\Repositories\Interfaces\CompanyRepositoryInterface;
 use App\Repositories\Interfaces\PlaceRepositoryInterface;
 use Illuminate\Support\ServiceProvider;
 
@@ -11,6 +13,7 @@ class AppServiceProvider extends ServiceProvider
 
     protected $classes = [
         PlaceRepositoryInterface::class => EloquentPlaceRepository::class,
+        CompanyRepositoryInterface::class => EloquentCompanyRepository::class,
     ];
 
     /**

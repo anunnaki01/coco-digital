@@ -3,15 +3,14 @@
 namespace App\Http\Controllers\Place;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PlaceRequest;
 use App\Repositories\Interfaces\PlaceRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Class RegisterController
+ * Class GetByIdController
  * @package App\Http\Controllers\Place
  */
-class RegisterController extends Controller
+class GetByIdController extends Controller
 {
     /**
      * @var PlaceRepositoryInterface
@@ -29,17 +28,17 @@ class RegisterController extends Controller
     }
 
     /**
-     * @param PlaceRequest $request
-     * @return \Illuminate\Http\JsonResponse
-     * @throws \Exception
+     * @param int $id
+     * @return JsonResponse
      */
-    public function __invoke(PlaceRequest $request): JsonResponse
+    public function __invoke(int $id): JsonResponse
     {
-        try {
-            $place = $this->placeRepository->store($request->validated());
-            return response()->json(['message' => 'profesional registrado con exito', 'place' => $place], 201);
-        } catch (\Exception $e) {
-            throw new \Exception($e->getMessage(), 500);
+        $place = $this->placeRepository->getById($id);
+
+        if (empty($place)) {
+            return response()->json(['message' => "Place not found"], 404);
         }
+
+        return response()->json(['message' => 'Place found', 'place' => $place], 200);
     }
 }

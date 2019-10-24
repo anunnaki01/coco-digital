@@ -23,9 +23,17 @@ interface PlaceRepositoryInterface
     public function getAll(): array;
 
     /**
+     * @param int $id
      * @return array
      */
-    public function getById(): array;
+    public function getById(int $id): array;
+
+    /**
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function update(int $id, array $data): bool;
 
     /**
      * @param array $placeData

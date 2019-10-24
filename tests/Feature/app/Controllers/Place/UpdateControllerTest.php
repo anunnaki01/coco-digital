@@ -4,8 +4,8 @@ namespace Tests\Feature\app\Controllers\Place;
 
 
 use App\Models\Company;
+use App\Models\Place;
 use App\Repositories\Interfaces\PlaceRepositoryInterface;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
@@ -14,28 +14,38 @@ use Tests\TestCase;
  * Class RegisterControllerTest
  * @package Tests\Feature\app\Controllers\Place
  */
-class RegisterControllerTest extends TestCase
+class UpdateControllerTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
+
     /**
      * @var Company
      */
     protected $companyFactory;
 
+    /**
+     * @var Place
+     */
+    protected $placeFactory;
 
     protected function setUp(): void
     {
         parent::setUp();
 
         $this->companyFactory = factory(Company::class)->create();
+        $this->placeFactory = factory(Place::class)->create([
+            'company_id' => $this->companyFactory
+        ]);
     }
 
     /**
-     * Prueba el registro satisfactorio del profesional
+     * Prueba la actualizacion del registro satisfactorio del profesional
      */
-    public function testRegisterPlaceSuccess(): void
+    public function testUpdatePlaceSuccess(): void
     {
-        $response = $this->post(route('place-register'), [
+
+        $response = $this->post(route('place-update'), [
+            "id" => $this->placeFactory->id,
             "name" => "juan",
             "company_id" => $this->companyFactory->id,
             "is_active" => 1
@@ -43,7 +53,37 @@ class RegisterControllerTest extends TestCase
             'Accept' => 'application/json'
         ]);
 
-        $response->assertStatus(201);
+        $response->assertStatus(200);
+        $response->assertJson([
+            'message' => 'profesional actualizado con éxito'
+        ]);
+    }
+
+    /**
+     * Prueba que cuando la funcion update del repositorio retorna false muestre el mensaje y el status 412
+     */
+    public function testUpdatePlaceError()
+    {
+        $placeRepositoryMock = \Mockery::mock(PlaceRepositoryInterface::class)
+            ->shouldReceive('update')
+            ->andReturn(false)
+            ->getMock();
+
+        $this->app->instance(PlaceRepositoryInterface::class, $placeRepositoryMock);
+
+        $response = $this->post(route('place-update'), [
+            "id" => $this->placeFactory->id,
+            "name" => "juan",
+            "company_id" => $this->companyFactory->id,
+            "is_active" => 1
+        ], [
+            'Accept' => 'application/json'
+        ]);
+
+        $response->assertStatus(412);
+        $response->assertJson([
+            'message' => 'Error al actualizar el profesional'
+        ]);
     }
 
     /**
@@ -65,15 +105,15 @@ class RegisterControllerTest extends TestCase
      */
     public function testRegisterPlaceException()
     {
-
         $placeRepositoryMock = \Mockery::mock(PlaceRepositoryInterface::class)
-            ->shouldReceive('store')
+            ->shouldReceive('update')
             ->andThrow(new \Exception('error test', 500))
             ->getMock();
 
         $this->app->instance(PlaceRepositoryInterface::class, $placeRepositoryMock);
 
-        $response = $this->post(route('place-register'), [
+        $response = $this->post(route('place-update'), [
+            "id" => $this->placeFactory->id,
             "name" => "juan",
             "company_id" => $this->companyFactory->id,
             "is_active" => 1

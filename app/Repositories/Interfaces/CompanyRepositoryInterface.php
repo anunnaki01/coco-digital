@@ -9,4 +9,8 @@ namespace App\Repositories\Interfaces;
 interface CompanyRepositoryInterface
 {
 
+    /**
+     * @return array
+     */
+    public function getAll(): array;
 }
