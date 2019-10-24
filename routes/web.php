@@ -19,4 +19,7 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::post('/place/register', 'Place\RegisterController')->name('place-register');
+Route::group(['prefix' => "/place"], function () {
+    Route::post('/register', 'Place\RegisterController')->name('place-register');
+    Route::get('/getById/{id}', 'Place\GetByIdController')->name('place-get-by-id');
+});

@@ -35,11 +35,14 @@ class EloquentPlaceRepository implements PlaceRepositoryInterface
     }
 
     /**
+     * @param int $id
      * @return array
      */
-    public function getById(): array
+    public function getById(int $id): array
     {
-        // TODO: Implement getById() method.
+        $place = $this->place->with('company')->find($id);
+
+        return empty($place) ? [] : $place->toArray();
     }
 
     /**
