@@ -13,7 +13,7 @@ use Tests\TestCase;
  * Class RegisterControllerTest
  * @package Tests\Feature\app\Controllers\Place
  */
-class GetByIdControllerTest extends TestCase
+class GetPlaceByIdControllerTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
 

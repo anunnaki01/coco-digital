@@ -12,7 +12,7 @@ use Illuminate\View\View;
  * Class ListController
  * @package App\Http\Controllers\Place
  */
-class ListController extends Controller
+class ListPlacesController extends Controller
 {
     /**
      * @var PlaceRepositoryInterface
