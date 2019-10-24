@@ -29,6 +29,13 @@ interface PlaceRepositoryInterface
     public function getById(int $id): array;
 
     /**
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function update(int $id, array $data): bool;
+
+    /**
      * @param array $placeData
      * @return Place
      */

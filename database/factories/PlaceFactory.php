@@ -11,6 +11,6 @@ $factory->define(Place::class, function (Faker $faker) {
         'company_id' => function () {
             return factory(\App\Models\Company::class)->create()->id;
         },
-        'active' => 1
+        'is_active' => 1
     ];
 });

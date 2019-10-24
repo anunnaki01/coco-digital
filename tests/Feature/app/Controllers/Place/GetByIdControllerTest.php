@@ -5,7 +5,7 @@ namespace Tests\Feature\app\Controllers\Place;
 
 use App\Models\Company;
 use App\Models\Place;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
 
@@ -15,7 +15,7 @@ use Tests\TestCase;
  */
 class GetByIdControllerTest extends TestCase
 {
-    use WithoutMiddleware, DatabaseTransactions;
+    use WithoutMiddleware, RefreshDatabase;
 
     protected function setUp(): void
     {
@@ -42,10 +42,13 @@ class GetByIdControllerTest extends TestCase
         $response->assertStatus(200);
         $response->assertJson([
             'message' => 'Place found',
-            'data' => $expected
+            'place' => $expected
         ]);
     }
 
+    /**
+     * Prueba que se obtenga el status 404 cuando no encuentra un registro
+     */
     public function testGetPlaceByIdNotFound(): void
     {
         $response = $this->get(route('place-get-by-id', ['id' => 0]), [

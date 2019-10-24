@@ -8,6 +8,6 @@ use Faker\Generator as Faker;
 $factory->define(Company::class, function (Faker $faker) {
     return [
         'name' => $faker->word,
-        'active' => 1
+        'is_active' => 1
     ];
 });

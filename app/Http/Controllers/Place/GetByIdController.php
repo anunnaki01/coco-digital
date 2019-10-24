@@ -23,6 +23,7 @@ class GetByIdController extends Controller
      */
     public function __construct(PlaceRepositoryInterface $placeRepository)
     {
+        $this->middleware('auth');
         $this->placeRepository = $placeRepository;
     }
 
@@ -38,6 +39,6 @@ class GetByIdController extends Controller
             return response()->json(['message' => "Place not found"], 404);
         }
 
-        return response()->json(['message' => 'Place found', 'data' => $place], 200);
+        return response()->json(['message' => 'Place found', 'place' => $place], 200);
     }
 }

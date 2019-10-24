@@ -31,7 +31,9 @@ class EloquentPlaceRepository implements PlaceRepositoryInterface
      */
     public function getAll(): array
     {
-        // TODO: Implement getAll() method.
+        $places = $this->place->with('company')->get();
+
+        return empty($places) ? [] : $places->toArray();
     }
 
     /**
@@ -46,11 +48,23 @@ class EloquentPlaceRepository implements PlaceRepositoryInterface
     }
 
     /**
+     * @param int $id
+     * @param array $data
+     * @return bool
+     */
+    public function update(int $id, array $data): bool
+    {
+        return $this->place->where('id', $id)->update($data);
+    }
+
+    /**
      * @param array $placeData
      * @return Place
      */
     public function store(array $placeData): Place
     {
-        return $this->place->create($placeData);
+        $place = $this->place->create($placeData);
+
+        return $this->place->with('company')->find($place->id);
     }
 }

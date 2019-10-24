@@ -8,10 +8,10 @@ use App\Repositories\Interfaces\PlaceRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Class RegisterController
+ * Class UpdateController
  * @package App\Http\Controllers\Place
  */
-class RegisterController extends Controller
+class UpdateController extends Controller
 {
     /**
      * @var PlaceRepositoryInterface
@@ -28,18 +28,30 @@ class RegisterController extends Controller
         $this->placeRepository = $placeRepository;
     }
 
+
     /**
      * @param PlaceRequest $request
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      * @throws \Exception
      */
     public function __invoke(PlaceRequest $request): JsonResponse
     {
         try {
-            $place = $this->placeRepository->store($request->validated());
-            return response()->json(['message' => 'profesional registrado con exito', 'place' => $place], 201);
+
+            $data = $request->validated();
+            unset($data['id']);
+
+            $updated= $this->placeRepository->update( $request->get('id'), $data);
+
+            if(!$updated){
+                return response()->json(['message' => 'Error al actualizar el profesional'], 412);
+            }
+
+            return response()->json(['message' => 'profesional actualizado con éxito'], 200);
         } catch (\Exception $e) {
             throw new \Exception($e->getMessage(), 500);
         }
     }
+
+
 }

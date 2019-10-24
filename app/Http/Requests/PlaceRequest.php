@@ -3,6 +3,8 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class PlaceRequest extends FormRequest
 {
@@ -21,12 +23,25 @@ class PlaceRequest extends FormRequest
      *
      * @return array
      */
-    public function rules()
+    public function rules(): array
     {
         return [
-            'name' => 'required|string|max:255',
+            'id' => $this->getIdRule(),
+            'name' => ['required', 'string', 'max:255'],
             'company_id' => 'required|numeric',
-            'active' => 'numeric',
+            'is_active' => 'numeric',
         ];
+    }
+
+    /**
+     * @return string
+     */
+    public function getIdRule(): string
+    {
+        if (Request::route()->getName() == 'place-update') {
+            return 'required|numeric|min:1|exists:place,id';
+        }
+
+        return 'nullable';
     }
 }
