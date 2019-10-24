@@ -30,6 +30,7 @@ class ListControllerTest extends TestCase
 
     protected function setUp(): void
     {
+
         parent::setUp();
 
         $this->companyFactory = factory(Company::class)->create();
