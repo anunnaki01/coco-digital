@@ -17,8 +17,7 @@ class CreateCompanyTable extends Migration
             $table->engine = 'InnoDB';
             $table->increments('id');
             $table->string('name', 255);
-            $table->tinyInteger('active')->default(1);
-            $table->timestamps();
+            $table->tinyInteger('is_active')->default(1);
         });
     }
 

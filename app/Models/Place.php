@@ -24,7 +24,7 @@ class Place extends Model
     /**
      * @var array
      */
-    protected $fillable = ['name', 'company_id', 'active'];
+    protected $fillable = ['name', 'company_id', 'is_active'];
 
     /**
      * @return BelongsTo

@@ -25,4 +25,14 @@ class EloquentCompanyRepository implements CompanyRepositoryInterface
     {
         $this->company = $company;
     }
+
+    /**
+     * @return array
+     */
+    public function getAll(): array
+    {
+        $companies = $this->company->get();
+
+        return empty($companies) ? [] : $companies->toArray();
+    }
 }
