@@ -17,6 +17,8 @@
 </style>
 @section('content')
     <div class="container">
+        <div class="alert alert-success" style="display: none;" role="alert"></div>
+        <div class="alert alert-danger" style="display: none;" role="alert"></div>
         <div class="row justify-content-center">
             <div class="col-md-12">
                 <div class="card">
@@ -53,28 +55,33 @@
 @endsection
 <script type="text/javascript">
     $(document).ready(function () {
-        $.ajax({
-            url: "{{ route('place-list') }}",
-            method: 'get',
-            success: function (data) {
-                $.each(data.places, function (key, place) {
-                    var status = (place.is_active) ? 'Activo' : 'Inactivo';
-                    $('#places tbody').append(
-                        '<tr>' +
-                        '<td>' + place.name + '</td>' +
-                        '<td>' + status + '</td>' +
-                        '<td>' + place.company + '</td>' +
-                        '<td>' + '<i class="fa fa-edit" attr-id="' + place.id + '"></i>' + '</td>' +
-                        '</tr>'
-                    );
-                });
-            },
-            error: function (error) {
-                $('#places tbody').append('<tr>' +
-                    '<td colspan="4" class="text-center">' + error.statusText + "</td>" +
-                    "<tr>");
-            }
-        });
+        loadTable();
+
+        function loadTable() {
+            $("tbody tr").remove();
+            $.ajax({
+                url: "{{ route('place-list') }}",
+                method: 'get',
+                success: function (data) {
+                    $.each(data.places, function (key, place) {
+                        var status = (place.is_active) ? 'Activo' : 'Inactivo';
+                        $('#places tbody').append(
+                            '<tr>' +
+                            '<td>' + place.name + '</td>' +
+                            '<td>' + status + '</td>' +
+                            '<td>' + place.company + '</td>' +
+                            '<td>' + '<i class="fa fa-edit" attr-id="' + place.id + '"></i>' + '</td>' +
+                            '</tr>'
+                        );
+                    });
+                },
+                error: function (error) {
+                    $('#places tbody').append('<tr>' +
+                        '<td colspan="4" class="text-center">' + error.statusText + "</td>" +
+                        "<tr>");
+                }
+            });
+        }
 
         $('#place-add').submit(function (e) {
             e.preventDefault();
@@ -91,11 +98,20 @@
                 type: "POST",
                 url: url,
                 data: form.serialize(),
-                success: function () {
-                    location.reload(true);
+                success: function (data) {
+                    loadTable();
+                    $("#place-add").trigger("reset");
+                    $('#modalAdd').modal('hide');
+                    $('body').removeClass('modal-open');
+                    $('.modal-backdrop').remove();
+
+                    $('.alert-success').text(data.message)
+                    $('.alert-success').show();
                 },
                 error: function (error) {
                     console.log(error.statusText);
+                    $('.alert-danger').text(error.statusText);
+                    $('.alert-danger').show();
                 }
             });
         });

@@ -32,4 +32,7 @@ Route::group(['prefix' => "/place"], function () {
 Route::group(['prefix' => "/service"], function () {
     Route::get('/list/index', 'Service\ListServicesController@index')->name('service-list-index');
     Route::get('/list/getAll', 'Service\ListServicesController@getAll')->name('service-list');
+    Route::post('/register', 'Service\RegisterServiceController')->name('service-register');
+    Route::get('/getById/{id}', 'Service\GetServiceByIdController')->name('service-get-by-id');
+    Route::post('/update', 'Service\UpdateServiceController')->name('service-update');
 });

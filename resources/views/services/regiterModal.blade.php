@@ -4,13 +4,13 @@
     <div class="modal-dialog modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalAddLongTitle">Registrar profesional</h5>
+                <h5 class="modal-title" id="modalAddLongTitle">Registrar servicio</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
-                <form id="place-add">
+                <form id="service-add">
                     <input id="id" name="id" type="hidden" value="0">
                     <div class="form-group">
                         <label for="name">Nombre* </label>
@@ -18,26 +18,35 @@
                     </div>
                     <div class="form-group">
                         <label for="name">Estado </label>
-                        <select class="form-control" name="is_active" id="is_active" required>
+                        <select class="form-control" name="is_enabled" id="is_enabled" required>
                             <option value="1">Activo</option>
                             <option value="0">Inactivo</option>
                         </select>
                     </div>
 
                     <div class="form-group">
-                        <label for="company">Compañía* </label>
-                        <select class="form-control" name="company_id" id="company_id" required>
-                            @foreach($companies as $company)
-                                <option value="{{$company['id']}}">{{$company['name']}}</option>
+                        <label for="preparation">Preparación* </label>
+                        <input type="text" class="form-control" name="preparation" id="preparation"
+                               placeholder="Enter preparation" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Tiempo* </label>
+                        <input type="text" class="form-control" name="time" id="time"
+                               placeholder="Enter time" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="place">Profesional* </label>
+                        <select class="form-control" name="place_id" id="place_id" required>
+                            @foreach($places as $place)
+                                <option value="{{$place['id']}}">{{$place['name']}}</option>
                             @endforeach
                         </select>
                     </div>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal-place">Cerrar
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-modal-service">Cerrar
                     </button>
-                    <button type="submit" class="btn btn-primary" id="place-save">Guardar</button>
+                    <button type="submit" class="btn btn-primary" id="service-save">Guardar</button>
                 </form>
             </div>
-
         </div>
     </div>
 </div>

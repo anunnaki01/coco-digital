@@ -1,12 +1,10 @@
 <?php
 
-namespace Tests\Feature\app\Controllers\Place;
+namespace Tests\Feature\app\Controllers\Service;
 
 
-use App\Models\Company;
 use App\Models\Place;
 use App\Models\Service;
-use App\Repositories\Interfaces\PlaceRepositoryInterface;
 use App\Repositories\Interfaces\ServiceRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;

@@ -43,8 +43,8 @@ class ListServicesController extends Controller
      */
     public function index(): View
     {
-        //return view('places.list')
-        //  ->with('companies', $this->serviceRepository->getAll());
+        return view('services.list')
+            ->with('places', $this->placeRepository->getAll());
     }
 
     /**
@@ -64,6 +64,7 @@ class ListServicesController extends Controller
             $servicesReturn[$key]['id'] = $service['id'];
             $servicesReturn[$key]['name'] = $service['name'];
             $servicesReturn[$key]['is_enabled'] = (bool)$service['is_enabled'];
+            $servicesReturn[$key]['time'] = $service['time'];
             $servicesReturn[$key]['preparation'] = $service['preparation'];
             $servicesReturn[$key]['place'] = $service['place']['name'];
         });
