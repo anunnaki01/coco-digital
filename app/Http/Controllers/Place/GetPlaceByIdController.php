@@ -10,7 +10,7 @@ use Illuminate\Http\JsonResponse;
  * Class GetByIdController
  * @package App\Http\Controllers\Place
  */
-class GetByIdController extends Controller
+class GetPlaceByIdController extends Controller
 {
     /**
      * @var PlaceRepositoryInterface

@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Feature\app\Controllers\Place;
+namespace Tests\Feature\app\Controllers\Service;
 
 
 use App\Models\Company;
-use App\Repositories\Interfaces\PlaceRepositoryInterface;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
+use App\Models\Place;
+use App\Repositories\Interfaces\ServiceRepositoryInterface;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
@@ -14,31 +14,33 @@ use Tests\TestCase;
  * Class RegisterControllerTest
  * @package Tests\Feature\app\Controllers\Place
  */
-class RegisterControllerTest extends TestCase
+class RegisterServiceControllerTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
     /**
      * @var Company
      */
-    protected $companyFactory;
+    protected $placeFacory;
 
 
     protected function setUp(): void
     {
         parent::setUp();
 
-        $this->companyFactory = factory(Company::class)->create();
+        $this->placeFacory = factory(Place::class)->create();
     }
 
     /**
-     * Prueba el registro satisfactorio del profesional
+     * Prueba el registro satisfactorio del servicio
      */
     public function testRegisterPlaceSuccess(): void
     {
-        $response = $this->post(route('place-register'), [
-            "name" => "juan",
-            "company_id" => $this->companyFactory->id,
-            "is_active" => 1
+        $response = $this->post(route('service-register'), [
+            "name" => "servicio",
+            "preparation" => "preparacion",
+            "time" => "time",
+            "place_id" => $this->placeFacory->id,
+            "is_enabled" => 1
         ], [
             'Accept' => 'application/json'
         ]);
@@ -49,7 +51,7 @@ class RegisterControllerTest extends TestCase
     /**
      * Prueba la validacion de los campos
      */
-    public function testRegisterPlaceValidationRequest(): void
+    public function testRegisterServiceValidationRequest(): void
     {
         $response = $this->post(route('place-register'), [], [
             'Accept' => 'application/json'
@@ -66,17 +68,19 @@ class RegisterControllerTest extends TestCase
     public function testRegisterPlaceException()
     {
 
-        $placeRepositoryMock = \Mockery::mock(PlaceRepositoryInterface::class)
+        $placeRepositoryMock = \Mockery::mock(ServiceRepositoryInterface::class)
             ->shouldReceive('store')
             ->andThrow(new \Exception('error test', 500))
             ->getMock();
 
-        $this->app->instance(PlaceRepositoryInterface::class, $placeRepositoryMock);
+        $this->app->instance(ServiceRepositoryInterface::class, $placeRepositoryMock);
 
-        $response = $this->post(route('place-register'), [
-            "name" => "juan",
-            "company_id" => $this->companyFactory->id,
-            "is_active" => 1
+        $response = $this->post(route('service-register'), [
+            "name" => "servicio",
+            "preparation" => "preparacion",
+            "time" => "time",
+            "place_id" => $this->placeFacory->id,
+            "is_enabled" => 1
         ], [
             'Accept' => 'application/json'
         ]);

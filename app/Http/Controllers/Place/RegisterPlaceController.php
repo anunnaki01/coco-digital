@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
  * Class RegisterController
  * @package App\Http\Controllers\Place
  */
-class RegisterController extends Controller
+class RegisterPlaceController extends Controller
 {
     /**
      * @var PlaceRepositoryInterface

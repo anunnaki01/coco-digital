@@ -26,12 +26,4 @@ class Company extends Model
      */
     protected $fillable = ['name', 'is_active'];
 
-    /**
-     * @return HasMany
-     */
-    public function places(): HasMany
-    {
-        return $this->hasMany(Place::class);
-
-    }
 }

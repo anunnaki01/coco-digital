@@ -14,7 +14,7 @@ use Tests\TestCase;
  * Class RegisterControllerTest
  * @package Tests\Feature\app\Controllers\Place
  */
-class ListControllerTest extends TestCase
+class ListPlacesControllerTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
 
@@ -30,6 +30,7 @@ class ListControllerTest extends TestCase
 
     protected function setUp(): void
     {
+
         parent::setUp();
 
         $this->companyFactory = factory(Company::class)->create();
