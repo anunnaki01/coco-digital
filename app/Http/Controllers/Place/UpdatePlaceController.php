@@ -11,7 +11,7 @@ use Illuminate\Http\JsonResponse;
  * Class UpdateController
  * @package App\Http\Controllers\Place
  */
-class UpdateController extends Controller
+class UpdatePlaceController extends Controller
 {
     /**
      * @var PlaceRepositoryInterface

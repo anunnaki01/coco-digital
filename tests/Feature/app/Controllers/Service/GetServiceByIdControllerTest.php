@@ -1,10 +1,10 @@
 <?php
 
-namespace Tests\Feature\app\Controllers\Place;
+namespace Tests\Feature\app\Controllers\Service;
 
 
-use App\Models\Company;
 use App\Models\Place;
+use App\Models\Service;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithoutMiddleware;
 use Tests\TestCase;
@@ -13,7 +13,7 @@ use Tests\TestCase;
  * Class RegisterControllerTest
  * @package Tests\Feature\app\Controllers\Place
  */
-class GetByIdControllerTest extends TestCase
+class GetServiceByIdControllerTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
 
@@ -25,33 +25,33 @@ class GetByIdControllerTest extends TestCase
     /**
      * Prueba que se obtenga la informacion de un registro por medio del id
      */
-    public function testGetPlaceById(): void
+    public function testGetServiceById(): void
     {
-        $companyFactory = factory(Company::class)->create();
-        $placeFactory = factory(Place::class)->create([
-            'company_id' => $companyFactory
+        $placeFactory = factory(Place::class)->create();
+        $serviceFactory = factory(Service::class)->create([
+            'place_id' => $placeFactory->id
         ]);
 
-        $expected = $placeFactory->toArray();
-        $expected['company'] = $companyFactory->toArray();
+        $expected = $serviceFactory->toArray();
+        $expected['place'] = $placeFactory->toArray();
 
-        $response = $this->get(route('place-get-by-id', ['id' => $placeFactory->id]), [
+        $response = $this->get(route('service-get-by-id', ['id' => $serviceFactory->id]), [
             'Accept' => 'application/json'
         ]);
 
         $response->assertStatus(200);
         $response->assertJson([
-            'message' => 'Place found',
-            'place' => $expected
+            'message' => 'Service found',
+            'service' => $expected
         ]);
     }
 
     /**
      * Prueba que se obtenga el status 404 cuando no encuentra un registro
      */
-    public function testGetPlaceByIdNotFound(): void
+    public function testGetServiceByIdNotFound(): void
     {
-        $response = $this->get(route('place-get-by-id', ['id' => 0]), [
+        $response = $this->get(route('service-get-by-id', ['id' => 0]), [
             'Accept' => 'application/json'
         ]);
         $response->assertStatus(404);

@@ -51,6 +51,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('place-list-index') }}">Profesionales</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('service-list-index') }}">Servicios</a>
+                    </li>
                 </ul>
 
                 <!-- Right Side Of Navbar -->

@@ -14,7 +14,7 @@ use Tests\TestCase;
  * Class RegisterControllerTest
  * @package Tests\Feature\app\Controllers\Place
  */
-class UpdateControllerTest extends TestCase
+class UpdatePlaceControllerTest extends TestCase
 {
     use WithoutMiddleware, RefreshDatabase;
 
