@@ -11,9 +11,7 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomeController@index');
 
 Auth::routes();
 
@@ -36,3 +34,6 @@ Route::group(['prefix' => "/service"], function () {
     Route::get('/getById/{id}', 'Service\GetServiceByIdController')->name('service-get-by-id');
     Route::post('/update', 'Service\UpdateServiceController')->name('service-update');
 });
+
+//View object users
+Route::get('/users/list', 'UsersController@index')->name('users-object-modify');

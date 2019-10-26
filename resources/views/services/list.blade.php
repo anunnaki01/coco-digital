@@ -81,7 +81,7 @@
                     });
                 },
                 error: function (error) {
-                    $('#places tbody').append('<tr>' +
+                    $('#services tbody').append('<tr>' +
                         '<td colspan="6" class="text-center">' + error.statusText + "</td>" +
                         "<tr>");
                 }
