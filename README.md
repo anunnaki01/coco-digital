@@ -1,4 +1,4 @@
-# Coco digital test
+# Coco digital test (laravel 6)
 
 ## Requerimientos
 Para instalar la aplicacion se necesita en la maquina tener instalado
@@ -10,6 +10,8 @@ Para instalar la aplicacion se necesita en la maquina tener instalado
 
 * Clonar este repositorio en su maquina
 
+* Ejecutar el comando **composer install** en la raiz del proyecto para descargar paquetes necesarios en la aplicación.
+
 * Se debe crear las bases de datos en mysql "coco_digital" y "coco_digital_test".
 
 * Para conectar la aplicacion a la base de datos creada se debe ingresar al fichero .env de la raiz y modificar las variables de coneccion de base de datos.
@@ -19,8 +21,6 @@ Para instalar la aplicacion se necesita en la maquina tener instalado
 * Una vez modificados los ficheros de enviroment se debe ejecutar el comando **php artisan config:clear** para que estos cambios sean tomados.
 
 * Despues se debe ejecutar el comando **npm install && npm run dev** para compilar las librerias necesarias para la autenticacion de usuarios.
-
-* Ejecutar el comando **composer install** en la raiz del proyecto para descargar paquetes necesarios en la aplicación.
 
 * Ejecutar el comando de las migraciones **php artisan migrate --seed** para generar las tablas y correr un seeder necesario para su funcionamiento.
 
